@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "target": "ES2022",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "out",
+        "baseUrl": "./src",
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "paths": {
+            "*": [
+                ".node_modules/*",
+                ".src/*"
+            ]
+        }
+    },
+    "include": [
+        "./src/**/*",
+        "./src/**/*.json"
+    ]
+}
