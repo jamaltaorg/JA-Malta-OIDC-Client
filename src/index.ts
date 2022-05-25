@@ -4,7 +4,7 @@ import {authenticate, callbackMiddleware} from "./Middleware";
 declare global {
     namespace Express {
         interface Request {
-            JAUserInfo : UserInfo;
+            jaUserInfo : UserInfo;
         }
     }
 }
