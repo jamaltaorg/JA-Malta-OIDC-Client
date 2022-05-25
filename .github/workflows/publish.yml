@@ -11,6 +11,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current package version
+        uses: martinbeentjes/npm-get-version-action@v1.2.3
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
@@ -19,7 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release
+          tag_name: ${{ steps.package-version.outputs.current-version }}
           release_name: JAYE OIDC Relaying Party Client
           draft: false
           prerelease: false
