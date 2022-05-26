@@ -6,9 +6,10 @@ This module is meant to be used when needing authentication with the JA Malta Pl
 
 ## Features
 The connector has the following available features:
-1. Express Middleware to authenticate a token including a cache that lasts as long as the access-token
-2. UserInfo cache, to not constantly call the authentication endpoint everytime user info is needed.
-3. OpenID Discovery Specs
+1. Express Middleware to authenticate a token including a cache that lasts as long as the access-token.
+2. Session continuation after login is hit when token expiry
+3. UserInfo cache, to not constantly call the authentication endpoint everytime user info is needed.
+4. OpenID Discovery Specs
 
 #### Assumptions
 Cookie Middleware (such as cookie parser).
@@ -29,16 +30,16 @@ let url = await issuer.authorisationUrl;
 ```
 
 #### Login Callback
-From there onwards, create an express route with the callback and **implement the callback middleware**.  The callback middleware creates a cookie on the frontend which can be read by the authentication middleware.
+From there onwards, create an express route with the callback and **implement the callback middleware**.  The callback middleware creates a cookie on the frontend which can be read by the authentication middleware.  The callback middleware also gets the cookie "before-callback-location", which stores the original location to redirect the user to their original location.  This feature can be disabled by setting the useRedirect parameter to false.
 ```js
-expressApp.get("/callback", callbackMiddleware(issuer), (req, res) => {
+expressApp.get("/callback", callbackMiddleware(issuer, true), (req, res) => {
     //your code here
     res.sendStatus(200);
 });
 ```
 
 #### Authentication Middleware
-After initial authentication is done, the issuer does everything for you using the authentication middleware.
+After initial authentication is done, the issuer does everything for you using the authentication middleware.  In the case that the token is invalid, the user gets redirected to the login page and a cookie is created called "before-callback-location" so the backend knows where to redirect the user to.
 ```js
 expressApp.get("/your-endpoint", authenticate(issuer), (req, res) => {
     let userinfo = req.jaUserInfo;
