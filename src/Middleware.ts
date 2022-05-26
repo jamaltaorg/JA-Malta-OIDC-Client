@@ -38,6 +38,7 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
     }
 }
 
-function setAuthCookie(res: Response, accessToken: string){
-    res.cookie("Authorization", `Bearer ${accessToken}`, {httpOnly: true});
+function setAuthCookie(res: Response, accessToken: string, expires: number){
+    let date = new Date(expires * 1000);
+    res.cookie("Authorization", `Bearer ${accessToken}`, {httpOnly: true, expires: date});
 }
