@@ -7,7 +7,7 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "declaration": true,
-        "outDir": "out",
+        "outDir": "dist",
         "baseUrl": "./src",
         "allowJs": true,
         "resolveJsonModule": true,
