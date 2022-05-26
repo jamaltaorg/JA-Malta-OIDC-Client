@@ -42,6 +42,7 @@ export class JAMaltaIssuer{
 
         this.issuerUrl = process.env["CUSTOM_ISSUER_URL"] ?? "https://auth,jayemalta.org/"
 
+        console.log(options.cacheEnabled);
         this.tokenStore = new Map<string, TokenSet>();
         if(options.cacheEnabled ?? true) this.userCache = new Map<string, UserCache>();
         this.cacheTTL = options.cacheTTL ?? 3600;
@@ -128,9 +129,6 @@ export class JAMaltaIssuer{
         }
     }
 
-    //todo logout url for a specific client
-    //todo caching of user info
-
     /**
      * Store the token from Provider and the TokenSet information
      * @param token
@@ -161,6 +159,38 @@ export class JAMaltaIssuer{
             }
         }
     }
+
+    public async getUserInfo(token: string | TokenSet) : Promise<UserInfo | undefined>{
+        let code = token instanceof TokenSet ? token.access_token : token;
+
+        let cache = this.getFromCache(code);
+        if(cache) return cache; //If there is something in cache return
+
+        let client = await this.client;
+
+        try {
+            let userInfo : UserinfoResponse<UserInfo> = await client.userinfo(token);
+            let userCache = new UserCache(userInfo, this.cacheTTL);
+            this.setUserInfoToCache(userCache, code);
+            return userCache;
+        }catch (e) {
+            return undefined; //Unable to fetch user information, just return
+        }
+    }
+
+    private getFromCache(code: string) : UserInfo | undefined{
+        if(!this.userCache) return undefined; //cache is disabled
+
+        let currentCache = this.userCache.get(code);
+        if(currentCache && !currentCache.expired) return currentCache;
+    }
+
+    private setUserInfoToCache(userCache : UserCache, code: string){
+        if(!this.userCache) return;
+
+        this.userCache.set(code, userCache);
+    }
+
 }
 
 class UserCache implements UserInfo{
