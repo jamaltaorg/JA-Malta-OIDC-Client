@@ -6,9 +6,10 @@ import {JAMaltaIssuer} from "./Issuer";
  * This will also set the cookie with the Bearer token (aka code).
  *
  * @param issuer The initialised JA Malta Issuer
+ * @param useRedirect If the redirection cookie will be used.
  * @param uri Which uri to use. @see {@link JAMaltaIssuer.verifyToken}.
  */
-export const callbackMiddleware = (issuer: JAMaltaIssuer, uri?: number) => {
+export const callbackMiddleware = (issuer: JAMaltaIssuer, useRedirect: boolean, uri?: number) => {
     return (req: Request, res: Response, next: NextFunction) => {
         let token = issuer.verifyToken(req, uri).then(value => {
             if (value === undefined) res.status(401);
@@ -20,7 +21,7 @@ export const callbackMiddleware = (issuer: JAMaltaIssuer, uri?: number) => {
                 if(req.cookies["before-callback-location"]){ //If there is a before callback location, go back to where the trigger was made
                     let redirect = req.cookies["before-callback-location"];
                     res.clearCookie("before-callback-location");
-                    return res.redirect(redirect);
+                    if(useRedirect) return res.redirect(redirect);
                 }
                 //This means that the authorisation token has been set
             }
