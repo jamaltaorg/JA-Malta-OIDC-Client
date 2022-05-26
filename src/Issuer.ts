@@ -164,6 +164,20 @@ export class JAMaltaIssuer{
 }
 
 class UserCache implements UserInfo{
+    constructor(userInfo : UserInfo, ttl: number) {
+        this.sub = userInfo.sub;
+        this.name = userInfo.name;
+        this.description = userInfo.description;
+        this.birthdate = userInfo.birthdate;
+        this.birthdateTimestamp = userInfo.birthdateTimestamp;
+        this.group = userInfo.group;
+        this.type = userInfo.type;
+        this.email = userInfo.email;
+
+        this.cacheLoaded = new Date();
+        this.ttl = ttl;
+    }
+
     sub: string;
     name: string;
     description: string;
@@ -172,4 +186,23 @@ class UserCache implements UserInfo{
     group: string;
     type: string;
     email: string;
+
+    cacheLoaded : Date;
+    ttl: number;
+
+    get expired(): boolean {
+        let currentEpochTime = Math.round((new Date()).getTime() / 1000);
+        let generateEpochTime = Math.round((this.cacheLoaded).getTime() / 1000);
+
+        let timePassed = currentEpochTime - generateEpochTime; //check the amount of time passed in seconds
+        return timePassed > this.ttl; //If the cache has been there for (TIME TO EXPIRE)ms, expire the cache
+    }
+}
+
+/**
+ * Store the issuer options in case there is anything custom
+ */
+export type IssuerOptions = {
+    cacheEnabled?: boolean, //Default True
+    cacheTTL?: number; //Number in seconds for TTL
 }
