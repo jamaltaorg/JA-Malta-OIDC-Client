@@ -42,10 +42,9 @@ export class JAMaltaIssuer{
 
         this.issuerUrl = process.env["CUSTOM_ISSUER_URL"] ?? "https://auth,jayemalta.org/"
 
-        console.log(options.cacheEnabled);
         this.tokenStore = new Map<string, TokenSet>();
-        if(options.cacheEnabled ?? true) this.userCache = new Map<string, UserCache>();
-        this.cacheTTL = options.cacheTTL ?? 3600;
+        if(options?.cacheEnabled ?? true) this.userCache = new Map<string, UserCache>();
+        this.cacheTTL = options?.cacheTTL ?? 3600;
     }
 
     /**
@@ -145,6 +144,7 @@ export class JAMaltaIssuer{
      */
     public async getToken(token: string) : Promise<TokenSet | undefined>{
         let tokenSet = this.tokenStore.get(token);
+        if(!tokenSet) return undefined;
 
         if(!tokenSet.expired()) return tokenSet;
         else if(tokenSet.expired() && !tokenSet.refresh_token) return undefined;
