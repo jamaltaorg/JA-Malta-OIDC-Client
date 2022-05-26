@@ -14,7 +14,7 @@ export const callbackMiddleware = (issuer: JAMaltaIssuer) => {
             else {
                 //This means that the authorisation token has been set
                 res.status(200);
-                setAuthCookie(res, value.access_token)
+                setAuthCookie(res, value.access_token, value.expires_at)
                 //This means that the authorisation token has been set
             }
 
@@ -30,7 +30,8 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
         issuer.getToken(token).then(async (value) => {
             if(!value) return res.redirect(await issuer.authorisationUrl); //If the value is undefined, redirect the user to the login page
 
-            if(value.access_token !== token) setAuthCookie(res, value.access_token); //If there was a refresh token, update the cookie with the new refresh token
+            if(value.access_token !== token) setAuthCookie(res, value.access_token, value.expires_at); //If there was a refresh token, update the cookie with the new refresh token
+            req.tokenCode = value.access_token;
             req.jaUserInfo = await issuer.getUserInfo(value); //Get the user info and cache it into the request
 
             res.status(200);
