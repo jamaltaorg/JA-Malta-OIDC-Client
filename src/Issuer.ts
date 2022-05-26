@@ -194,6 +194,15 @@ export class JAMaltaIssuer{
 }
 
 class UserCache implements UserInfo{
+    sub: string;
+    name?: string;
+    description?: string;
+    birthdate?: string;
+    birthdateTimestamp?: string;
+    group?: string;
+    type?: string;
+    email?: string;
+
     constructor(userInfo : UserInfo, ttl: number) {
         this.sub = userInfo.sub;
         this.name = userInfo.name;
@@ -207,15 +216,6 @@ class UserCache implements UserInfo{
         this.cacheLoaded = new Date();
         this.ttl = ttl;
     }
-
-    sub: string;
-    name: string;
-    description: string;
-    birthdate: string;
-    birthdateTimestamp: string;
-    group: string;
-    type: string;
-    email: string;
 
     cacheLoaded : Date;
     ttl: number;
