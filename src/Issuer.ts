@@ -18,8 +18,9 @@ export class JAMaltaIssuer{
     private readonly codeChallenge;
 
     private tokenStore : Map<string, TokenSet>;
-    private userCache: Map<string, UserInfo>;
 
+    private readonly userCache: Map<string, UserCache>;
+    private readonly cacheTTL : number;
     /**
      * Constructs the Issuer Module
      * @param clientId Client ID
