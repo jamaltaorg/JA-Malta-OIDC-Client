@@ -1,4 +1,4 @@
-import {JAMaltaIssuer} from "./Issuer";
+import {JAMaltaIssuer, IssuerOptions} from "./Issuer";
 import {authenticate, callbackMiddleware} from "./Middleware";
 
 declare global {
@@ -20,7 +20,7 @@ interface UserInfo {
     email: string
 }
 
-export {UserInfo, JAMaltaIssuer, authenticate, callbackMiddleware}
+export {UserInfo, JAMaltaIssuer, IssuerOptions, authenticate, callbackMiddleware}
 
 
 
