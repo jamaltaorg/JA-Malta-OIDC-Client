@@ -1,6 +1,6 @@
 {
-    "name": "ja-malta-oidc",
-    "version": "0.9.0",
+    "name": "jamalta-oidc-relying",
+    "version": "0.9.1",
     "scripts": {
         "build": "npm run build:cjs && npm run build:esm && npm run build:types",
         "build:cjs": "node tools/cleanup cjs && tsc -p config/tsconfig.cjs.json",

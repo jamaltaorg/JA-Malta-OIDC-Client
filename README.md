@@ -1,9 +1,12 @@
-# JA Malta OIDC Relaying Party Module
+# JA Malta OIDC Relying Party Module
 
-This module is meant to be used when needing authentication with the JA Malta Platforms.  The authentication, ran under the URI auth.jamalta.org, uses OpenID Connect specs and discovery - [discovery url](https://auth.jamalta.org/.well-known/openid-configuration).  
+This module is meant to be used when needing authentication with the JA Malta Platforms.  The authentication, ran under the URI auth.jamalta.org, uses OpenID Connect specs and [discovery url](https://auth.jamalta.org/.well-known/openid-configuration).  
 
 **Please note that the authentication and this connector is still in the early alpha testing.  Currently, this module is meant to be used internally until everything is tested**.
 
+This package can technically be used by other OIDC Providers but **this was not tested and no support will be provided**.  
+
+Feel free to open a PR and features.
 ## Features
 The connector has the following available features:
 1. Express Middleware to authenticate a token including a cache that lasts as long as the access-token.
