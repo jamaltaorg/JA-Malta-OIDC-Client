@@ -1,11 +1,12 @@
 {
     "name": "ja-malta-oidc",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "scripts": {
         "build": "npm run build:cjs && npm run build:esm && npm run build:types",
         "build:cjs": "node tools/cleanup cjs && tsc -p config/tsconfig.cjs.json",
         "build:esm": "node tools/cleanup esm && tsc -p config/tsconfig.esm.json",
-        "build:types": "node tools/cleanup types && tsc -p config/tsconfig.types.json"
+        "build:types": "node tools/cleanup types && tsc -p config/tsconfig.types.json",
+        "dev-start": "node_modules/.bin/ts-node -r dotenv/config src/index.ts"
     },
     "publishConfig": {
         "access": "public"
