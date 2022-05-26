@@ -6,7 +6,7 @@ This module is meant to be used when needing authentication with the JA Malta Pl
 
 This package can technically be used by other OIDC Providers but **this was not tested and no support will be provided**.  
 
-Feel free to open a PR and features.
+Feel free to open a PR and add/suggest features (no contribution guide yet).
 ## Features
 The connector has the following available features:
 1. Express Middleware to authenticate a token including a cache that lasts as long as the access-token.
