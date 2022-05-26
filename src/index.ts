@@ -21,6 +21,3 @@ interface UserInfo {
 }
 
 export {UserInfo, JAMaltaIssuer, IssuerOptions, authenticate, callbackMiddleware}
-
-let issuer = new JAMaltaIssuer("Xa0b2QCj1nnfH29TmIpZDvyAvVHrazK1", "fvBHN8GmeV4rPRPznxi5ESbkrp7B7K4H", [""], ["code"], ["openid", "email"])
-
