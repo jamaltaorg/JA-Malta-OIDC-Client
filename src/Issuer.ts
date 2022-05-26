@@ -1,4 +1,4 @@
-import {Client, generators, Issuer, TokenSet} from "openid-client";
+import {Client, generators, Issuer, TokenSet, UserinfoResponse} from "openid-client";
 import {Request} from "express";
 import {debug} from "util";
 import {UserInfo} from "./index";
@@ -28,8 +28,9 @@ export class JAMaltaIssuer{
      * @param redirectUris The redirect uris
      * @param responseTypes Response types such as code, id_token, etc
      * @param scopes Required scopes.  The array is then converted into a string seperated by spaces
+     * @param options Optional options for client.  @see{@link IssuerOptions}.
      */
-    constructor(clientId: string, clientSecret: string, redirectUris: string[], responseTypes: string[], scopes: string[]) {
+    constructor(clientId: string, clientSecret: string, redirectUris: string[], responseTypes: string[], scopes: string[], options?: IssuerOptions) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.redirectUris = redirectUris;
@@ -40,6 +41,10 @@ export class JAMaltaIssuer{
         this.codeChallenge = generators.codeChallenge(this.codeVerifier);
 
         this.issuerUrl = process.env["CUSTOM_ISSUER_URL"] ?? "https://auth,jayemalta.org/"
+
+        this.tokenStore = new Map<string, TokenSet>();
+        if(options.cacheEnabled ?? true) this.userCache = new Map<string, UserCache>();
+        this.cacheTTL = options.cacheTTL ?? 3600;
     }
 
     /**
