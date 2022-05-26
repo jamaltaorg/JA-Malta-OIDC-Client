@@ -31,7 +31,7 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
             if(!value) return res.redirect(await issuer.authorisationUrl); //If the value is undefined, redirect the user to the login page
 
             if(value.access_token !== token) setAuthCookie(res, value.access_token); //If there was a refresh token, update the cookie with the new refresh token
-            let client = await issuer.client;
+            req.jaUserInfo = await issuer.getUserInfo(value); //Get the user info and cache it into the request
 
             res.status(200);
         });
