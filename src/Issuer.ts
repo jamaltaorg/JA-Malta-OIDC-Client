@@ -91,6 +91,19 @@ export class JAMaltaIssuer{
     }
 
     /**
+     *
+     * @param code
+     */
+    public getLogoutUrl(code: string): Promise<string>{
+        return new Promise<string>(async resolve => {
+            let client = await this.client;
+            let token = await this.getToken(code);
+
+            resolve (client.endSessionUrl({id_token_hint: token?.id_token ?? undefined}));
+        })
+    }
+
+    /**
      * Verify the token received from the callback
      * @param req The request from express
      * @param uri In the case that multiple redirectUris are passed, it will either default to the first uri or the given, second uri @see {@link redirectUris}
