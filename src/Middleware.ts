@@ -35,6 +35,7 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
             req.jaUserInfo = await issuer.getUserInfo(value); //Get the user info and cache it into the request
 
             res.status(200);
+            next();
         });
     }
 }
