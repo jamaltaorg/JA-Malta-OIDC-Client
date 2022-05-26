@@ -6,15 +6,22 @@ import {JAMaltaIssuer} from "./Issuer";
  * This will also set the cookie with the Bearer token (aka code).
  *
  * @param issuer The initialised JA Malta Issuer
+ * @param uri Which uri to use. @see {@link JAMaltaIssuer.verifyToken}.
  */
-export const callbackMiddleware = (issuer: JAMaltaIssuer) => {
+export const callbackMiddleware = (issuer: JAMaltaIssuer, uri?: number) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        let token = issuer.verifyToken(req).then(value => {
+        let token = issuer.verifyToken(req, uri).then(value => {
             if (value === undefined) res.status(401);
             else {
                 //This means that the authorisation token has been set
                 res.status(200);
                 setAuthCookie(res, value.access_token, value.expires_at)
+
+                if(req.cookies["before-callback-location"]){ //If there is a before callback location, go back to where the trigger was made
+                    let redirect = req.cookies["before-callback-location"];
+                    res.clearCookie("before-callback-location");
+                    return res.redirect(redirect);
+                }
                 //This means that the authorisation token has been set
             }
 
@@ -28,7 +35,10 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
         let token = req.cookies["Authorization"]?.split(" ")[1] ?? req.header("Authorization")?.split(" ")[1]; //Try getting the token from the cookies or header
 
         issuer.getToken(token).then(async (value) => {
-            if(!value) return res.redirect(await issuer.authorisationUrl); //If the value is undefined, redirect the user to the login page
+            if(!value) {
+                setCallbackRedirectCookie(res, req.originalUrl);
+                return res.redirect(await issuer.authorisationUrl); //If the value is undefined, redirect the user to the login page
+            }
 
             if(value.access_token !== token) setAuthCookie(res, value.access_token, value.expires_at); //If there was a refresh token, update the cookie with the new refresh token
             req.tokenCode = value.access_token;
@@ -38,6 +48,10 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
             next();
         });
     }
+}
+
+function setCallbackRedirectCookie(res: Response, currentEndpoint: string){
+    res.cookie("before-callback-location", currentEndpoint, {httpOnly: true})
 }
 
 function setAuthCookie(res: Response, accessToken: string, expires: number){
