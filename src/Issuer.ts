@@ -208,6 +208,9 @@ export class JAMaltaIssuer{
 
 }
 
+/**
+ * UserInfo with cache that expires based on @see{@link {UserCache.ttl}}.  Also see @see{@link IssuerOptions.cacheTTL} to see how to modify the time to live.
+ */
 class UserCache implements UserInfo{
     sub: string;
     name?: string;
