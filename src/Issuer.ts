@@ -96,7 +96,7 @@ export class JAMaltaIssuer{
     }
 
     /**
-     *
+     * Get the logout url for the client
      * @param code
      */
     public getLogoutUrl(code: string): Promise<string>{
@@ -160,6 +160,10 @@ export class JAMaltaIssuer{
         }
     }
 
+    /**
+     * Get the code from the token and makes a request to get the user information
+     * @param token
+     */
     public async getUserInfo(token: string | TokenSet) : Promise<UserInfo | undefined>{
         let code = token instanceof TokenSet ? token.access_token : token;
 
