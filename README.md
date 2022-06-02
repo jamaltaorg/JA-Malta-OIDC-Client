@@ -52,9 +52,9 @@ expressApp.get("/your-endpoint", authenticate(issuer), (req, res) => {
 The user info is then stored into the request as seen above, and can be used in any way needed.
 
 #### Logout
-The issuer also provides the functionality to logout easily by doing `let url = await issuer.getLogoutUrl(token);`
+The issuer also provides the functionality to logout easily by doing `let url = await issuer.getLogoutUrl(token);`  The logout middleware is used to clear the token, and it's related user information from the cache, however, this is optional, **considering you do the steps yourself**.  Not clearing the cache will result in the user seemingly staying authenticated until cache expires.
 ```js
-expressApp.get("/logout", authenticate(issuer), (req, res) => {
+expressApp.get("/logout", authenticate(issuer), logoutMiddleware(issuer), (req, res) => {
    issuer.getLogoutUrl(req.tokenCode).then(value => res.redirect(value));
 })
 ```
