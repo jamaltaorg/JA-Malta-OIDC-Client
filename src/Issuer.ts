@@ -182,6 +182,17 @@ export class JAMaltaIssuer{
         }
     }
 
+    /**
+     * Remove a token, and it's related user information from the cache.
+     * @param token The token from the request
+     */
+    public removeFromCache(token: string | TokenSet) : void{
+        let code = token instanceof TokenSet ? token.access_token : token;
+
+        if(this.tokenStore.get(code)) this.tokenStore.delete(code);
+        if(this.userCache.get(code)) this.userCache.delete(code);
+    }
+
     private getFromCache(code: string) : UserInfo | undefined{
         if(!this.userCache) return undefined; //cache is disabled
 
