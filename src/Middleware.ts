@@ -57,6 +57,16 @@ export const authenticate = (issuer: JAMaltaIssuer) => {
     }
 }
 
+export const logoutMiddleware = (issuer: JAMaltaIssuer) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        res.clearCookie("Authorization");
+        res.clearCookie("before-callback-location");
+
+        issuer.removeFromCache(req.tokenCode);
+        next();
+    }
+}
+
 function setCallbackRedirectCookie(res: Response, currentEndpoint: string){
     res.cookie("before-callback-location", currentEndpoint, {httpOnly: true})
 }
