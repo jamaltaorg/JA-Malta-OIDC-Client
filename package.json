@@ -1,6 +1,6 @@
 {
     "name": "jamalta-oidc-client",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "description": "JA Malta OIDC Client for external/internal login-as implementation",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
