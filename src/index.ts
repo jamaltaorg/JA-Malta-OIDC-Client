@@ -1,5 +1,5 @@
 import {JAMaltaIssuer, IssuerOptions} from "./Issuer";
-import {authenticate, callbackMiddleware} from "./Middleware";
+import {authenticate, callbackMiddleware, logoutMiddleware} from "./Middleware";
 
 declare global {
     namespace Express {
@@ -21,4 +21,4 @@ interface UserInfo {
     email?: string
 }
 
-export {UserInfo, JAMaltaIssuer, IssuerOptions, authenticate, callbackMiddleware}
+export {UserInfo, JAMaltaIssuer, IssuerOptions, authenticate, callbackMiddleware, logoutMiddleware}
