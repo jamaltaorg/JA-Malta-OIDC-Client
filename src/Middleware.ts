@@ -31,6 +31,12 @@ export const callbackMiddleware = (issuer: JAMaltaIssuer, useRedirect: boolean, 
     }
 }
 
+/**
+ * Authentication Middleware is the function called when one wants to make sure that the user is properly authenticated.  If the user is not authenticated, they will be redirected to the login page.  Once the login is complete, the user continues where they left off.
+ *
+ * This also sets req information such as jaUserInfo and tokenCode for future usage if needed.
+ * @param issuer
+ */
 export const authenticate = (issuer: JAMaltaIssuer) => {
     return (req: Request, res: Response, next: NextFunction) => {
         let token = req.cookies["Authorization"]?.split(" ")[1] ?? req.header("Authorization")?.split(" ")[1]; //Try getting the token from the cookies or header
