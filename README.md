@@ -1,5 +1,5 @@
 # JA Malta OIDC Relying Party Module
-[![Release & Publish](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml/badge.svg)](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml) ![npm](https://img.shields.io/npm/v/jamalta-oidc-client)
+[![Docs](https://img.shields.io/github/workflow/status/jamaltaorg/JA-Malta-OIDC-Client/Release%20&%20Publish?label=Documentation&logo=github)](https://jamaltaorg.github.io/JA-Malta-OIDC-Client/) [![Release & Publish](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml/badge.svg)](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml) [![npm](https://img.shields.io/npm/v/jamalta-oidc-client)](https://www.npmjs.com/package/jamalta-oidc-client)
 
 This module is meant to be used when needing authentication with the JA Malta Platforms.  The authentication, ran under the URI auth.jamalta.org, uses OpenID Connect specs and [discovery url](https://auth.jamalta.org/.well-known/openid-configuration). 
 
