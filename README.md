@@ -1,6 +1,7 @@
 # JA Malta OIDC Relying Party Module
+[![Release & Publish](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml/badge.svg)](https://github.com/jamaltaorg/JA-Malta-OIDC-Client/actions/workflows/publish.yml) ![npm](https://img.shields.io/npm/v/jamalta-oidc-client)
 
-This module is meant to be used when needing authentication with the JA Malta Platforms.  The authentication, ran under the URI auth.jamalta.org, uses OpenID Connect specs and [discovery url](https://auth.jamalta.org/.well-known/openid-configuration).  
+This module is meant to be used when needing authentication with the JA Malta Platforms.  The authentication, ran under the URI auth.jamalta.org, uses OpenID Connect specs and [discovery url](https://auth.jamalta.org/.well-known/openid-configuration). 
 
 **Please note that the authentication and this connector is still in the early alpha testing.  Currently, this module is meant to be used internally until everything is tested**.
 
@@ -20,6 +21,11 @@ ExpressJS being used
 
 ## Getting Started
 Getting started is pretty easy.  
+
+### Installing the module
+```bash
+npm install jamalta-oidc-client
+```
 
 #### Creating the issuer
 ```js 

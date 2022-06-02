@@ -1,6 +1,6 @@
 {
     "name": "jamalta-oidc-client",
-    "version": "0.9.6",
+    "version": "0.9.7",
     "description": "JA Malta OIDC Client for external/internal login-as implementation",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -33,7 +33,7 @@
         "name": "Jamie Stivala",
         "email": "jamie@jayemalta.org"
     },
-    "homepage": "https://github.com/jamaltaorg/JA-Malta-OIDC-Client",
+    "homepage": "https://jamaltaorg.github.io/JA-Malta-OIDC-Client/",
     "repository": {
         "type": "git",
         "url": "https://github.com/jamaltaorg/JA-Malta-OIDC-Client"
